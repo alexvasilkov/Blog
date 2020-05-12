@@ -534,7 +534,7 @@ body {
 
 .inner {
 	margin: 0 auto;
-	max-width: 1040px;
+	max-width: 920px;
 	width: 100%
 }
 
@@ -812,7 +812,7 @@ body {
 		padding-left: 4vw
 	}
 	.site-nav-right {
-		display: none
+		padding-right: 4vw
 	}
 }
 
@@ -903,7 +903,6 @@ body {
 }
 
 .post-card-excerpt {
-	font-family: Georgia, serif
 }
 
 .post-card-meta {
@@ -1003,14 +1002,14 @@ body {
 
 .post-full-header {
 	margin: 0 auto;
-	padding: 6vw 3vw 3vw;
-	max-width: 1040px;
+	padding: 56px 0 3vw;
+	max-width: 920px;
 	text-align: center
 }
 
 @media (max-width:500px) {
 	.post-full-header {
-		padding: 14vw 3vw 10vw
+		padding: 40px 3vw 10vw
 	}
 }
 
@@ -1028,7 +1027,11 @@ body {
 }
 
 .post-full-meta-date {
-	color: #3eb0ef
+	color: #738a94
+}
+
+.post-full-meta-tags {
+	color: #738a94
 }
 
 .post-full-title {
@@ -1042,47 +1045,38 @@ body {
 }
 
 .post-full-image {
-	margin: 0 -10vw -165px;
-	height: 800px;
+	height: 400px;
 	background: #c5d2d9 50%;
 	background-size: cover;
-	border-radius: 5px
-}
-
-@media (max-width:1170px) {
-	.post-full-image {
-		margin: 0 -4vw -100px;
-		height: 600px;
-		border-radius: 0
-	}
-}
-
-@media (max-width:800px) {
-	.post-full-image {
-		height: 400px
-	}
+	border-radius: 5px;
 }
 
 .post-full-content {
 	position: relative;
 	margin: 0 auto;
-	padding: 70px 100px 0;
+	padding: 52px 0 0 0;
 	min-height: 230px;
-	font-family: Georgia, serif;
-	font-size: 2.2rem;
+	font-size: 1.6rem;
 	line-height: 1.6em;
 	background: #fff
 }
 
 @media (max-width:1170px) {
+	.post-full-image {
+		height: 400px;
+		border-radius: 0;
+	}
 	.post-full-content {
-		padding: 5vw 7vw 0
+		padding: 5vw 0 0
 	}
 }
 
 @media (max-width:800px) {
+	.post-full-image {
+		height: 320px
+	}
 	.post-full-content {
-		font-size: 1.9rem
+		font-size: 1.6rem
 	}
 }
 
@@ -1095,13 +1089,11 @@ body {
 .post-full-content:before {
 	content: "";
 	position: absolute;
-	top: 15px;
+	top: 0px;
 	z-index: -1;
 	display: block;
 	width: 20px;
 	height: 200px;
-	background: rgba(39, 44, 49, .15);
-	filter: blur(5px)
 }
 
 .post-full-content:after {
@@ -1186,7 +1178,7 @@ body {
 .post-full-content video {
 	display: block;
 	margin: 1.5em auto;
-	max-width: 1040px
+	max-width: 920px
 }
 
 @media (max-width:1040px) {
@@ -1240,7 +1232,7 @@ body {
 
 .post-full-content pre {
 	overflow-x: auto;
-	margin: 1.5em 0 3em;
+	margin: 0 0 1.6em;
 	padding: 20px;
 	max-width: 100%;
 	border: 1px solid #000;
@@ -1260,6 +1252,12 @@ body {
 
 .post-full-content pre code * {
 	color: inherit
+}
+
+.post-full-content .code_comment {
+    margin-top: -1.2em;
+    line-height: 1.6em;
+    font-size: 80%;
 }
 
 .post-full-content .fluid-width-video-wrapper {
@@ -1356,7 +1354,7 @@ body {
 
 @media (min-width:1180px) {
 	.post-full-content h5 {
-		max-width: 1060px;
+		max-width: 920px;
 		width: 100vw
 	}
 }
@@ -1403,14 +1401,15 @@ body {
 @media (max-width:500px) {
 	.post-full-meta {
 		font-size: 1.2rem;
-		line-height: 1.3em
+		line-height: 1.3em;
+		padding: 0
 	}
 	.post-full-title {
 		font-size: 2.9rem
 	}
 	.post-full-image {
-		margin-bottom: 4vw;
-		height: 350px
+		margin: 0 0 4vw;
+		height: 260px;
 	}
 	.post-full-content {
 		padding: 0
@@ -1580,7 +1579,7 @@ body {
 	justify-content: space-between;
 	margin: 0 auto;
 	padding: 3vw 0 6vw;
-	max-width: 840px
+	max-width: 920px
 }
 
 .author-card,
@@ -1644,7 +1643,7 @@ body {
 
 .post-full-comments {
 	margin: 0 auto;
-	max-width: 840px
+	max-width: 920px
 }
 
 .read-next-feed {
@@ -2007,7 +2006,7 @@ body {
 	}
 	.floating-header-divider,
 	.floating-header-title {
-		visibility: hidden
+		visibility: visible
 	}
 }
 
@@ -2051,7 +2050,6 @@ body {
 	-ms-flex-align: center;
 	align-items: center;
 	margin: 0 0 10px;
-	font-family: Georgia, serif;
 	font-style: italic
 }
 
@@ -2188,7 +2186,6 @@ body {
 .subscribe-overlay-description {
 	margin: 0 auto 50px;
 	max-width: 650px;
-	font-family: Georgia, serif;
 	font-size: 3rem;
 	line-height: 1.3em;
 	font-weight: 300;
