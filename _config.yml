@@ -65,15 +65,15 @@ feed:
 # or "master" otherwise
 safe: False
 lsi: False
-username: jekyller
-repo: jasper2
+username: alexvasilkov
+repo: Blog
 branch: master
-relative_source: ../jasper2/
-destination: ../jasper2-pages/
+destination: _site/
 
 exclude:
   - assets/css
   - node_modules
+  - _site
   - vendor
   - .travis.yml
   - Gemfile
