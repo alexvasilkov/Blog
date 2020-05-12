@@ -17,7 +17,7 @@ logo_dark: assets/images/favicon.png
 favicon: assets/images/favicon.png
 production_url: https://alexvasilkov.com/
 source_url: https://github.com/jekyller/jasper2/
-CNAME: #add cname for website to be created
+CNAME: alexvasilkov.com #add cname for website to be created
 
 # Social info
 navigation: False # show the navbar links
