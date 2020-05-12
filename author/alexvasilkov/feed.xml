@@ -1,4 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2020-05-12T17:00:49+00:00</updated><id>/</id><title type="html">Alex Vasilkov</title><subtitle>Software blog</subtitle><entry><title type="html">Git repos as Gradle dependencies</title><link href="/gradle-git" rel="alternate" type="text/html" title="Git repos as Gradle dependencies" /><published>2020-05-12T07:00:00+00:00</published><updated>2020-05-12T07:00:00+00:00</updated><id>/gradle-git</id><content type="html" xml:base="/gradle-git">&lt;p&gt;It is not an uncommon desire to split your codebase into reusable libraries (git repositories).
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom" >
+  <generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator>
+  <link href="/author/alexvasilkov/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="/" rel="alternate" type="text/html" />
+  <updated>2020-05-12T17:00:49+00:00</updated>
+  <id>/author/alexvasilkov/feed.xml</id>
+
+  
+  
+  
+
+  
+    <title type="html">Alex Vasilkov | </title>
+  
+
+  
+    <subtitle>Software blog</subtitle>
+  
+
+  
+
+  
+    
+      
+    
+  
+
+  
+  
+
+  
+    <entry>
+      <title type="html">Git repos as Gradle dependencies</title>
+      <link href="/gradle-git" rel="alternate" type="text/html" title="Git repos as Gradle dependencies" />
+      <published>2020-05-12T07:00:00+00:00</published>
+      <updated>2020-05-12T07:00:00+00:00</updated>
+      <id>/gradle-git</id>
+      <content type="html" xml:base="/gradle-git">&lt;p&gt;It is not an uncommon desire to split your codebase into reusable libraries (git repositories).
 Let’s review what options we have if we want to include external code into a Gradle project.&lt;/p&gt;
 
 &lt;h2 id=&quot;git-submodules&quot;&gt;Git submodules&lt;/h2&gt;
@@ -179,4 +218,32 @@ project. For public libraries binary artifacts distribution is the most popular
 and recommended option, while private libraries distribution can be trickier. If you wish to avoid
 building and distributing binary artifacts within your company then the Gradle plugin presented in
 this article can be a good alternative. As a side effect it also provides a mechanism to reuse your
-build scripts logic among several projects.&lt;/p&gt;</content><author><name>Alex Vasilkov</name></author><category term="Gradle" /><summary type="html">It is not an uncommon desire to split your codebase into reusable libraries (git repositories). Let’s review what options we have if we want to include external code into a Gradle project.</summary></entry></feed>
+build scripts logic among several projects.&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Alex Vasilkov</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="Gradle" />
+      
+
+      
+        <summary type="html">It is not an uncommon desire to split your codebase into reusable libraries (git repositories). Let’s review what options we have if we want to include external code into a Gradle project.</summary>
+      
+
+      
+      
+    </entry>
+  
+</feed>

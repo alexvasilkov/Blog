@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>Git repos as Gradle dependencies</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/syntax.css" />
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--[if IE]>
+        <style>
+            p, ol, ul{
+                width: 100%;
+            }
+            blockquote{
+                width: 100%;
+            }
+        </style>
+    <![endif]-->
+    
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="Software blog" />
+    <link rel="shortcut icon" href="/assets/images/favicon.png" type="image/png" />
+    <link rel="canonical" href="/gradle-git" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="Alex Vasilkov" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Git repos as Gradle dependencies" />
+    <meta property="og:description" content="It is not an uncommon desire to split your codebase into reusable libraries (git repositories). Let’s review what options we have if we want to include external code into a Gradle project. Git submodules An obvious choice can be git submodules. Creating a git submodule is easy: git submodule add" />
+    <meta property="og:url" content="/gradle-git" />
+    <meta property="og:image" content="/assets/images/posts/gradle-git.png" />
+    <meta property="article:publisher" content="https://www.facebook.com/false" />
+    <meta property="article:author" content="https://www.facebook.com/false" />
+    <meta property="article:published_time" content="2020-05-12T07:00:00+00:00" />
+    <meta property="article:modified_time" content="2020-05-12T07:00:00+00:00" />
+    <meta property="article:tag" content="Gradle" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Git repos as Gradle dependencies" />
+    <meta name="twitter:description" content="It is not an uncommon desire to split your codebase into reusable libraries (git repositories). Let’s review what options we have if we want to include external code into a Gradle project. Git submodules An obvious choice can be git submodules. Creating a git submodule is easy: git submodule add" />
+    <meta name="twitter:url" content="/" />
+    <meta name="twitter:image" content="/assets/images/posts/gradle-git.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Alex Vasilkov" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Gradle" />
+    <meta name="twitter:site" content="@false" />
+    <meta name="twitter:creator" content="@false" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Alex Vasilkov",
+        "logo": "/false"
+    },
+    "url": "/gradle-git",
+    "image": {
+        "@type": "ImageObject",
+        "url": "/assets/images/posts/gradle-git.png",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "/gradle-git"
+    },
+    "description": "It is not an uncommon desire to split your codebase into reusable libraries (git repositories). Let’s review what options we have if we want to include external code into a Gradle project. Git submodules An obvious choice can be git submodules. Creating a git submodule is easy: git submodule add"
+}
+    </script>
+
+    <!-- <script type="text/javascript" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/javascript">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="Git repos as Gradle dependencies" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="/">Alex Vasilkov</a>
+            
+        
+        
+    </div>
+    <div class="site-nav-right">
+        
+        
+        
+            <a class="social-link2 social-link-gh" href="https://github.com/alexvasilkov" target="_blank" rel="noopener">
+                <img src="/assets/images/github.png" width="32px" height ="32px"/>
+            </a>
+        
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full post  ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="12 May 2020">12 May 2020</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a class="post-full-meta-tags" href='/tag/gradle/'>GRADLE</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">Git repos as Gradle dependencies</h1>
+            </header>
+
+            
+            <figure class="post-full-image" style="background-image: url(/assets/images/posts/gradle-git.png)">
+            </figure>
+            
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <p>It is not an uncommon desire to split your codebase into reusable libraries (git repositories).
+Let’s review what options we have if we want to include external code into a Gradle project.</p>
+
+<h2 id="git-submodules">Git submodules</h2>
+
+<p>An obvious choice can be git submodules. Creating a git submodule is easy:</p>
+
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">git submodule add <span class="o">{</span>url<span class="o">}</span> <span class="o">{</span>name<span class="o">}</span></code></pre></figure>
+
+<p>And then you need to manually download submodules with</p>
+
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">git submodule update <span class="nt">--init</span> <span class="nt">--recursive</span></code></pre></figure>
+
+<p>Looks simple, but using git submodules can quickly become painful.
+GitHub <a href="https://github.blog/2016-02-01-working-with-submodules/">does not recommend</a> to use it in most cases, because:</p>
+
+<ul>
+  <li>Git doesn’t download submodule contents by default.</li>
+  <li>Difficult to contribute changes back to the submodule repository.</li>
+  <li>Collaborators won’t automatically see updates to submodules.</li>
+</ul>
+
+<p>If you have a simple use case and want to include an external repository that will change rarely
+then this option can be good enough.</p>
+
+<h2 id="binary-artifacts">Binary artifacts</h2>
+
+<p>The most popular option is to publish shared code as binary (<code class="highlighter-rouge">.jar</code> or <code class="highlighter-rouge">.aar</code>) artifacts
+in an external Maven repository.</p>
+
+<p>Open source libs can be distributed with one of a few free public Maven repositories like
+<a href="https://www.sonatype.com/nexus-repository-oss">Sonatype</a>, <a href="https://bintray.com/bintray/jcenter">Bintray</a>, etc. But if you want to distribute privately within a
+company then you’ll need to maintain your own private Maven repository
+(e.g. <a href="https://www.jfrog.com/confluence/display/RTF6X/Installing+Artifactory">Artifactory</a>), pay for external services (e.g. <a href="https://jfrog.com/article/private-repositories/">Bintray</a>),
+or try to <a href="https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github">use git repo</a> as a Maven repository.</p>
+
+<p>If you store your code on GitHub then you can use <a href="https://github.com/features/packages">GitHub Packages</a>,
+it is also available for private repositories, the main downside of this service is a storage limit.</p>
+
+<p>Once published it becomes very easy to use the library by adding it as a regular Gradle dependency.
+But this approach has a few important limitations:</p>
+
+<ul>
+  <li>Requires private Maven repository for non-public libraries.</li>
+  <li>Requires non-trivial build script configuration.</li>
+  <li>Requires extra efforts to publish new versions. Can be a problem for frequently changing projects.</li>
+  <li>Testing library code in a host project requires publishing a new snapshot version of the library,
+and repeating it until all issues are resolved.</li>
+  <li>Android flavors and build modes are not supported.
+Separate artifacts should be published for different lib’s variants.</li>
+</ul>
+
+<p>Overall this is a great option for public libraries, for big companies, or when no frequent changes
+are expected. In other cases it may become frustrating to make changes to the libraries and maintain
+the necessary infrastructure.</p>
+
+<h2 id="jitpack">JitPack</h2>
+
+<p><a href="https://jitpack.io/">JitPack</a> is a nice service that builds git repos on their servers on your behalf,
+it supports lots of git hostings (GitHub, Bitbucket, Gitlab), supports
+<a href="https://jitpack.io/docs/PRIVATE/">private repositories</a> and even supports Android flavors. The usage is simple:</p>
+
+<figure class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="n">repositories</span> <span class="o">{</span>
+    <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s1">'https://jitpack.io'</span> <span class="o">}</span>
+<span class="o">}</span>
+<span class="n">dependencies</span> <span class="o">{</span>
+    <span class="n">implementation</span> <span class="s1">'com.github.User:Repo:Tag'</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Overall it’s an interesting combo of a regular (“manual”) Maven repository and CI server.
+It is indeed much easier to set up a library and release new versions with JitPack. Though it still
+has some of drawbacks of a regular binary distribution:</p>
+
+<ul>
+  <li>Requires paid monthly subscription for non-public libraries.</li>
+  <li>Testing library code in a host project requires pushing changes to remote repo and waiting
+for JitPack to build it.</li>
+  <li>Less control of the distribution process. E.g. no checks and tests (unless using JitPack CI),
+end users may use any commits / branches as if they were real versions.</li>
+</ul>
+
+<h2 id="gradle-source-dependencies">Gradle source dependencies</h2>
+
+<p>Source dependencies feature was <a href="https://blog.gradle.org/introducing-source-dependencies">introduced</a> back in Gradle 4.x,
+it works by including a regular dependency:</p>
+
+<figure class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="n">dependencies</span> <span class="o">{</span>
+    <span class="n">implementation</span> <span class="s1">'org.gradle.cpp-samples:utilities:1.0'</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>and specifying how to get it from external git repo, in <code class="highlighter-rouge">settings.gradle</code>:</p>
+
+<figure class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="n">sourceControl</span> <span class="o">{</span>
+    <span class="n">gitRepository</span><span class="o">(</span><span class="s1">'https://github.com/gradle/native-samples-cpp-library.git'</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">producesModule</span><span class="o">(</span><span class="s1">'org.gradle.cpp-samples:utilities'</span><span class="o">)</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Gradle will download the sources from the (public) git repository and will try to build a binary
+artifact out of it. But this option has rather strict limitations:</p>
+
+<ul>
+  <li>Only public repositories are supported at the moment (see <a href="https://github.com/gradle/gradle/issues/8245">this bug report</a>).</li>
+  <li>The project in git repo should be properly configured so that Gradle knows how to build and identify its artifact.</li>
+  <li>Plus most of the same issues from the binary distribution option, as stated above.</li>
+</ul>
+
+<p>Overall this option does not look promising, it has lots of limitations and a fairly complicated setup.</p>
+
+<h2 id="gradle-plugin">Gradle plugin</h2>
+
+<p>Another alternative is to use a <a href="https://github.com/alexvasilkov/GradleGitDependenciesPlugin">Gradle plugin</a> (written by the author of this
+article). It helps to fetch and attach external git repositories as dependencies.
+For the last 5 years we successfully used the first
+version of this plugin in our company, and now I’m glad to introduce the second version,
+with a cleaner DSL and some minor fixes. Let’s check the usage.</p>
+
+<p>In <code class="highlighter-rouge">settings.gradle</code> file, declare the plugin:</p>
+
+<figure class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="n">plugins</span> <span class="o">{</span>
+    <span class="n">id</span> <span class="s1">'com.alexvasilkov.git-dependencies'</span> <span class="n">version</span> <span class="s1">'2.0.1'</span>
+<span class="o">}</span></code></pre></figure>
+
+<p class="code_comment">
+Note that for Gradle prio 6.x a more verbose declaration is needed, see plugin docs.
+</p>
+
+<p>In module’s <code class="highlighter-rouge">build.gradle</code> file, declare a git repository as dependency:</p>
+
+<figure class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="n">git</span> <span class="o">{</span>
+    <span class="n">implementation</span> <span class="s1">'https://example.com/repository.git'</span><span class="o">,</span> <span class="o">{</span>
+        <span class="n">tag</span> <span class="s1">'v1.2.3'</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Now the plugin will take care of downloading (or updating) specified git repo into <code class="highlighter-rouge">libs/{git name}</code>
+directory and attaching it as a <a href="https://docs.gradle.org/current/userguide/declaring_dependencies.html#sub:project_dependencies">project dependency</a>.</p>
+
+<p>Key features:</p>
+
+<ul>
+  <li>Both https and ssh authorization are supported.</li>
+  <li>Dependencies are resolved recursively, i.e. your git repository can define other git repositories
+as dependencies.</li>
+  <li>Versions conflict detection. If the same repository is declared with different commit, tag or
+branch then the build will fail.</li>
+  <li>Attached repositories can be safely edited and tested directly in the host project.</li>
+  <li>Seamless Android flavors support, since git repos are treated as regular modules.</li>
+</ul>
+
+<p>The plugin will resolve and download git repos before Gradle projects (modules) are evaluated,
+so one of the cool features is that you can move all your build scripts into a separate repo as well
+and then reuse them by declaring in <code class="highlighter-rouge">settings.gradle</code> like this:</p>
+
+<figure class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="n">git</span> <span class="o">{</span>
+    <span class="n">fetch</span> <span class="s1">'https://example.com/build_scripts_repo.git'</span><span class="o">,</span> <span class="o">{</span>
+        <span class="n">dir</span> <span class="s2">"$rootDir/gradle/scripts"</span>
+        <span class="n">tag</span> <span class="s1">'v1.2.3'</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Now your shared build scripts are available in all the projects with:</p>
+
+<figure class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="n">apply</span> <span class="nl">from:</span> <span class="s2">"$rootDir/gradle/scripts/{your_script}.gradle"</span></code></pre></figure>
+
+<p>In general this option is similar to git submodules but without most of its issues.
+There are still some issues worth mentioning:</p>
+
+<ul>
+  <li>Requires downloading and compiling source code, in contrast to pre-compiled binary artifacts.</li>
+  <li>No Kotlin DSL support yet.</li>
+  <li>No official support / maintenance from big companies to rely on.</li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>It is always a good idea to separate and reuse repeatedly used code into a dedicated library
+project. For public libraries binary artifacts distribution is the most popular
+and recommended option, while private libraries distribution can be trickier. If you wish to avoid
+building and distributing binary artifacts within your company then the Gradle plugin presented in
+this article can be a good alternative. As a side effect it also provides a mechanism to reuse your
+build scripts logic among several projects.</p>
+
+
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<!--<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="/">
+            
+                <img src="/assets/images/favicon.png" alt="Alex Vasilkov icon" />
+            
+            <span>Alex Vasilkov</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">Git repos as Gradle dependencies</div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+-->
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <!--<footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="/">Alex Vasilkov</a> &copy; 2020</section>
+                <section class="poweredby">Published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> using
+                    <a href="https://github.com/jekyller/jasper2" target="_blank" rel="noopener">Jasper2</a></section>
+            </div>
+        </footer>-->
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+
+    <!-- highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.10.0/components/prism-abap.min.js"></script>
+    <script>$(document).ready(function() {
+      $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    });</script>
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="https://demo.ghost.io/assets/js/jquery.fitvids.js?v=724281a32e"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69281367-1', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>
